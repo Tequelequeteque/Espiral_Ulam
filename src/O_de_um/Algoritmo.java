@@ -5,47 +5,67 @@
  */
 package O_de_um;
 
-import static GUI.Desenhos.primo;
 
 /**
  *
  * @author Gomes
  */
 public class Algoritmo {
+    
+    public static final int DIAMETRO_MAX = 10;
+    public static final int ESCALA = DIAMETRO_MAX / 5;
+
+    public static final boolean primo(int n) {
+        for (int i = 2; n <= 1 || i < n / 2; i++) {
+            if (n <= 1 || n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static final int decompositor(int n) {
+        int retorno = 2;// todos são divisiveis por ele mesmo e 1
+        for (int div = 2; div <= n / 2; div++) {
+            if (n % div == 0) {
+                retorno++;
+            }
+        }
+        return retorno;
+    }
 
     public static final Ponto retorno(int n) {
         int raizDeN = (int) Math.sqrt(n),
-                raio_do_quadrado = 0,
+                variante_do_lado = 0,
                 n_conhecido = 0;
         if (raizDeN % 2 == 1) {//impar
-            raio_do_quadrado = (int) Math.round(raizDeN / 2.0);
+            variante_do_lado = (int) Math.round(raizDeN / 2.0);
             n_conhecido = (int) Math.pow(raizDeN, 2);
-            if (n >= n_conhecido + (2 * raio_do_quadrado)) {//quadrante 2
+            if (n >= n_conhecido + (2 * variante_do_lado)) {//quadrante 2
 //                System.out.println("quadrante 2");
-                n_conhecido += (2 * raio_do_quadrado) - 1;
-                return new Ponto(-raio_do_quadrado, raio_do_quadrado - (n - n_conhecido));
+                n_conhecido += (2 * variante_do_lado) - 1;
+                return new Ponto(-variante_do_lado, variante_do_lado - (n - n_conhecido));
             } else {//quadrante 1
 //                System.out.println("quadrante 1");
-                return new Ponto(raio_do_quadrado - (n - n_conhecido) - 1, raio_do_quadrado);
+                return new Ponto(variante_do_lado - (n - n_conhecido) - 1, variante_do_lado);
             }
         } else {//par 
-            raio_do_quadrado = raizDeN / 2;
+            variante_do_lado = raizDeN / 2;
             n_conhecido = (int) Math.pow(raizDeN, 2);
-            if (n >= n_conhecido + (2 * raio_do_quadrado)) {//quadrante 4
+            if (n >= n_conhecido + (2 * variante_do_lado)) {//quadrante 4
 //                System.out.println("quadrante 4");
-                n_conhecido += (2 * raio_do_quadrado);
-                return new Ponto(raio_do_quadrado, -raio_do_quadrado + (n - n_conhecido));
+                n_conhecido += (2 * variante_do_lado);
+                return new Ponto(variante_do_lado, -variante_do_lado + (n - n_conhecido));
             } else {//quadrante 3
 //                System.out.println("quadrante 3");
-                return new Ponto(-raio_do_quadrado + (n - n_conhecido), -raio_do_quadrado);
+                return new Ponto(-variante_do_lado + (n - n_conhecido), -variante_do_lado);
             }
         }
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
             System.out.println(retorno(i).toString(i));
         }
-        System.out.println(primo(6));
     }
 }

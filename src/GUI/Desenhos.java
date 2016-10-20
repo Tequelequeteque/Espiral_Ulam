@@ -7,27 +7,13 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import static O_de_um.Algoritmo.retorno;
+import static O_de_um.Algoritmo.*;
 
 /**
  *
  * @author Gomes
  */
 public class Desenhos extends javax.swing.JFrame {
-
-    public static final boolean primo(int n) {
-        if (n > 2) {
-            for (int i = 2; i < n / 2; i++) {
-                if (n % i == 0) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            return n == 2;
-        }
-
-    }
 
     /**
      * Creates new form Desenhos
@@ -58,7 +44,7 @@ public class Desenhos extends javax.swing.JFrame {
             }
         });
 
-        quadro.setBackground(new java.awt.Color(255, 255, 255));
+        quadro.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,11 +80,18 @@ public class Desenhos extends javax.swing.JFrame {
 //        g.drawLine(0, (quadro.getHeight() / 2), quadro.getWidth(), (quadro.getHeight() / 2));
         g.setColor(Color.blue);
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            if (primo(i)) {
-                g.fillOval(retorno(i).getX() + (quadro.getWidth() / 2), retorno(i).getY() + (quadro.getHeight() / 2), 1, 1);
-                if (retorno(i).getX() > quadro.getWidth()/2) {
-                    break;
-                }
+            int diametro_do_ponto = (decompositor(i) / DIAMETRO_MAX);
+            int x = (retorno(i).getX() * ESCALA) + (quadro.getWidth() / 2) - (diametro_do_ponto / 2);
+            int y = (retorno(i).getY() * ESCALA) + (quadro.getHeight() / 2) - (diametro_do_ponto / 2);
+            if (!primo(i)) {
+                g.setColor(Color.blue);
+                g.fillOval(x, y, diametro_do_ponto, diametro_do_ponto);
+           } //else {
+//                g.setColor(Color.red);
+//                g.fillOval(x, y, 1, 1);
+//            }
+            if (retorno(i).getX() * ESCALA > quadro.getWidth() / 2) {
+                break;
             }
         }
     }//GEN-LAST:event_espiralDeUlamActionPerformed
